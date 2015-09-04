@@ -3,6 +3,13 @@ defmodule PaypalIpnForwarder.Mixfile do
 
   def project do
     [app: :paypal_ipn_forwarder,
+     name: "Paypal IPN Forwarder",
+     description: """
+     Manages a reverse proxy to enable your laptop to receive IPN messages
+     sent from your PayPal sandbox.
+
+     NOTE: NOT SECURE!  DO NOT USE THIS IN PRODUCTION!
+     """,
      version: "0.0.1",
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
@@ -27,6 +34,8 @@ defmodule PaypalIpnForwarder.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    []
+    [
+      {:white_bread, "~> 1.0.1", only: :dev}
+    ]
   end
 end
