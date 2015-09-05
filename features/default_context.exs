@@ -37,10 +37,6 @@ defmodule PaypalIpnForwarder.Background1Context do
     {:ok, state}
   end
   
-  and_ ~r/^the router is configured to forward its received IPN notifications to the client simulator$/, fn state ->
-    {:ok, state}
-  end
-  
   then_ "everything is configured", fn state ->
     actual_app_name = state |> Dict.get(:app_name)
 
