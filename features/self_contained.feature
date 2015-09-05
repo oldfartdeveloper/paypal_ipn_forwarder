@@ -15,13 +15,13 @@ Feature: Test Everything in Developer's Machine
 
   Background: Launch everthing for test in the development machine
     When I launch the PayPal IPN sender simulator
-    # And I launch the server
-    # And I launch the router
-    # And I launch the PayPal client simulator
-    # When the sender simulator is configured to forward IPN notifications to the server
-    # And the router configures the server to send IPN acknowledgements to the sender simulator
-    # And the router configures the server to forward its received IPN notifications to itself
-    # And the router is configured to forward its received IPN notifications to the client simulator
+    And I launch the server
+    And I launch the router
+    And I launch the PayPal client simulator
+    When the sender simulator is configured to forward IPN notifications to the server
+    And the router configures the server to send IPN acknowledgements to the sender simulator
+    And the router configures the server to forward its received IPN notifications to itself
+    And the router is configured to forward its received IPN notifications to the client simulator
     Then everything is configured
 
   Scenario: Test IPN notification handshake between sendor simulator and the server
