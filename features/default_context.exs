@@ -1,6 +1,7 @@
 defmodule PaypalIpnForwarder.DefaultContext do
   use WhiteBread.Context
 
+  subcontext PaypalIpnForwarder.Background1Context
   subcontext PaypalIpnForwarder.SenderSimulatorContext
   # subcontext PaypalIpnForwarder.ServerContext
   # subcontext PaypalIpnForwarder.RouterContext
@@ -16,14 +17,15 @@ defmodule PaypalIpnForwarder.DefaultContext do
   
 end
 
-defmodule PaypalIpnForwarder.SenderSimulatorContext do
+defmodule PaypalIpnForwarder.Background1Context do
   use WhiteBread.Context
-
+  
   when_ ~r/^I launch the (?<app_name>.*)$/, fn state, %{app_name: app_name} ->
     {:ok, state |> Dict.put(:app_name, app_name)}
   end
 
-  when_ ~r/^the sender simulator is configured to forward IPN notifications to the server$/, fn state ->
+  when_ ~r/^the (?<subject_app>.*) is configured to forward (?<notifications>.*) to the (?<object_app>.*)$/,
+      fn state, %{subject_app: subject_app, notifications: notifications, object_app: object_app} ->
     {:ok, state}
   end
   
@@ -53,7 +55,11 @@ defmodule PaypalIpnForwarder.SenderSimulatorContext do
     {:ok, state}
   end
 
-  
+end
+
+defmodule PaypalIpnForwarder.SenderSimulatorContext do
+  use WhiteBread.Context
+
   when_ ~r/^the sender simulator sends an IPN notification to the server as an HTTP request$/, fn state ->
     {:ok, state}
   end
