@@ -19,38 +19,10 @@ end
 
 defmodule PaypalIpnForwarder.Background1Context do
   use WhiteBread.Context
-  
-  when_ ~r/^I launch the (?<app_name>.*)$/, fn state, %{app_name: app_name} ->
-    {:ok, state |> Dict.put(:app_name, app_name)}
-  end
 
-  when_ ~r/^the (?<subject_app>.*) is configured to forward (?<notifications>.*) to the (?<object_app>.*)$/,
-      fn state, %{subject_app: subject_app, notifications: notifications, object_app: object_app} ->
-    {:ok, state}
+  given_ ~r/^that the components are launched and configured$/, fn state ->
+    {:ok, state |> Dict.put(:paypal_ipn_notifier, PaypalIpnSimulator.Manager.start_link)}
   end
-  
-  and_ ~r/^the router configures the server to send IPN acknowledgements to the sender simulator$/, fn state ->
-    {:ok, state}
-  end
-
-  and_ ~r/^the router configures the server to forward its received IPN notifications to itself$/, fn state ->
-    {:ok, state}
-  end
-  
-  then_ "everything is configured", fn state ->
-    actual_app_name = state |> Dict.get(:app_name)
-
-    # Serious "cheat" here just to clean up the test results.
-    # Just test 1 of the 4 'apps' since all this code changes soon anyways.
-    case actual_app_name do
-      "PayPal IPN sender simulator" ->
-        assert actual_app_name == "XPayPal IPN sender simulator"
-      _ ->
-        assert actual_app_name == actual_app_name
-    end
-    {:ok, state}
-  end
-
 end
 
 defmodule PaypalIpnForwarder.SenderSimulatorContext do
