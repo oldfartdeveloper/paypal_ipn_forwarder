@@ -1,8 +1,17 @@
-defmodule PaypalIpnSimulator.Manager do
+defmodule PaypalIpnForwarder.Manager do
   use GenServer
 
+  defmodule State do
+    defstruct sender_server: nil, server: nil, router: nil, client_simulator: nil
+  end
+
   def start_link(opts \\ []) do
-    GenServer.start_link(__MODULE__, :ok, [])
+    state = %State{sender_server: PaypalIpnForwarder.SenderSimulator.start_link,
+                   server: PaypalIpnForwarder.Server.start_link,
+                   router: PaypalIpnForwarder.Router.start_link,
+                   client_simulator: PaypalIpnForwarder.ClientSimulator.start_link
+                  }
+    GenServer.start_link(__MODULE__, :ok, [state])
   end
 
   def init(_) do
