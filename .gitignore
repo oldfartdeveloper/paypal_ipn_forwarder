@@ -1,7 +1,9 @@
+README.html
 /_build
 /deps
 erl_crash.dump
 *.ez
 *.beam
-README.html
+
+
 
