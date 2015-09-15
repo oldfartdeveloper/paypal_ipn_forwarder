@@ -1,7 +1,7 @@
 defmodule PaypalIpnForwarder.DefaultContext do
   use WhiteBread.Context
 
-  subcontext PaypalIpnForwarder.Background1Context
+  subcontext PaypalIpnForwarder.ManagerContext
   subcontext PaypalIpnForwarder.SenderSimulatorContext
   # subcontext PaypalIpnForwarder.ServerContext
   # subcontext PaypalIpnForwarder.RouterContext
@@ -14,14 +14,14 @@ defmodule PaypalIpnForwarder.DefaultContext do
   scenario_starting_state fn feature_state ->
     feature_state |> Dict.put(:starting_state_loaded, :yes)
   end
-  
+
 end
 
-defmodule PaypalIpnForwarder.Background1Context do
+defmodule PaypalIpnForwarder.ManagerContext do
   use WhiteBread.Context
 
   given_ ~r/^that the components are launched and configured$/, fn state ->
-    {:ok, state |> Dict.put(:paypal_ipn_notifier, PaypalIpnSimulator.Manager.start_link)}
+    {:ok, state |> Dict.put(:paypal_ipn_notifier, PaypalIpnForwarder.Manager.start_link)}
   end
 end
 
@@ -48,15 +48,15 @@ defmodule PaypalIpnForwarder.SenderSimulatorContext do
     {:ok, state}
   end
 
-  
+
   then_ ~r/^the server sends an IPN acknowledgement to the sender simulator as an HTTP request$/, fn state ->
     {:ok, state}
   end
-  
+
   then_ ~r/^it forwards the IPN notification to the router via the router's channel.$/, fn state ->
     {:ok, state}
   end
-  
+
   then_ ~r/^it forwards the IPN notification as an HTTP request to the its client simulator$/, fn state ->
     {:ok, state}
   end
@@ -64,7 +64,7 @@ defmodule PaypalIpnForwarder.SenderSimulatorContext do
   when_ ~r/^the client simulator sends an IPN acknowledgement to the router$/, fn state ->
     {:ok, state}
   end
-  
+
   when_ ~r/^the server sends an IPN acknowledgement to the sender simulator$/, fn state ->
     {:ok, state}
   end
@@ -100,5 +100,5 @@ defmodule PaypalIpnForwarder.SenderSimulatorContext do
   and_ ~r/^the client simulator processes the IPN notification$/, fn state ->
     {:ok, state}
   end
-  
+
 end
