@@ -1,7 +1,6 @@
 defmodule PaypalIpnForwarder.DefaultContext do
   use WhiteBread.Context
 
-  subcontext PaypalIpnForwarder.ManagerContext
   subcontext PaypalIpnForwarder.SenderSimulatorContext
   # subcontext PaypalIpnForwarder.ServerContext
   # subcontext PaypalIpnForwarder.RouterContext
@@ -15,14 +14,6 @@ defmodule PaypalIpnForwarder.DefaultContext do
     feature_state |> Dict.put(:starting_state_loaded, :yes)
   end
 
-end
-
-defmodule PaypalIpnForwarder.ManagerContext do
-  use WhiteBread.Context
-
-  given_ ~r/^that the components are launched and configured$/, fn state ->
-    {:ok, state |> Dict.put(:paypal_ipn_notifier, PaypalIpnForwarder.Manager.start_link)}
-  end
 end
 
 defmodule PaypalIpnForwarder.SenderSimulatorContext do

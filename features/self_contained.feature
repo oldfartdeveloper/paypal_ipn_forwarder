@@ -6,15 +6,12 @@ Feature: Test Everything in Developer's Machine
   and that most discovery can be made in my laptop
   all in order to speed development.
 
-  There are three components:
+  There are the following components:
 
   1.  The PayPal IPN sender simulator
   1.  The server
   1.  The router
   4.  The PayPal client simulator
-
-  Background: Launch and configure everything
-    Given that the components are launched and configured
 
   Scenario: Test IPN notification handshake between sendor simulator and the server
     When the sender simulator sends an IPN notification to the server as an HTTP request
