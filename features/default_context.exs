@@ -35,24 +35,20 @@ defmodule PaypalIpnForwarder.ManagerContext do
     case client do
       "sender simulator" ->
         sender_server = Manager.sender_server(manager)
-        assert is_pid(sender_server)
         assert(Manager.server(manager) == SenderSimulator.server(sender_server))
       "server" ->
         server = Manager.server(manager)
-        assert is_pid(server)
         assert(Manager.sender_server(manager) == Server.sender_server(server))
         assert(Manager.router(manager) == Server.router(server))
       "router" ->
         router = Manager.router(manager)
-        assert is_pid(router)
         assert(Manager.server(manager) == Router.server(router))
         assert(Manager.client_simulator(manager) == Router.client_simulator(router))
       "client simulator" ->
         client_simulator = Manager.client_simulator(manager)
-        assert is_pid(client_simulator)
         assert(Manager.router(manager) == ClientSimulator.router(client_simulator))
       _ ->
-        :dont_care
+        flunk "Unknown client '#{client}' or server '#{server}'"
     end
     {:ok, state}
   end
@@ -61,8 +57,14 @@ end
 
 defmodule PaypalIpnForwarder.SenderSimulatorContext do
   use WhiteBread.Context
+  alias PaypalIpnForwarder.Manager
+  alias PaypalIpnForwarder.SenderSimulator
+  alias PaypalIpnForwarder.Server
+  alias PaypalIpnForwarder.Router
+  alias PaypalIpnForwarder.ClientSimulator
 
   when_ ~r/^the sender simulator sends an IPN notification to the server as an HTTP request$/, fn state ->
+
     {:ok, state}
   end
 
