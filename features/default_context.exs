@@ -21,7 +21,6 @@ defmodule PaypalIpnForwarder.ManagerContext do
   use WhiteBread.Context
 
   given_ ~r/^the four servers are created and configured$/, fn state ->
-
     {:ok, servers} = PaypalIpnForwarder.Manager.start_link
     state
     |> Dict.put(:servers, servers)
