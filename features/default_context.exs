@@ -21,6 +21,8 @@ defmodule PaypalIpnForwarder.ManagerContext do
   use WhiteBread.Context
   alias PaypalIpnForwarder.Manager
   alias PaypalIpnForwarder.SenderSimulator
+  alias PaypalIpnForwarder.Server
+  alias PaypalIpnForwarder.ClientSimulator
 
   given_ ~r/^the four servers are created and configured$/, fn state ->
     {:ok, manager} = Manager.start_link
@@ -33,9 +35,12 @@ defmodule PaypalIpnForwarder.ManagerContext do
       "sender simulator" ->
         sender_server = Manager.sender_server(manager)
         assert is_pid(sender_server)
-        assert(Manager.server(manager) != SenderSimulator.server(sender_server))
+        assert(Manager.server(manager) == SenderSimulator.server(sender_server))
       "server" ->
-        assert is_pid(Manager.server(manager))
+        server = Manager.server(manager)
+        assert is_pid(server)
+        assert(Manager.sender_server(manager) == Server.sender_server(server))
+        assert(Manager.router(manager) == Server.router(server))
       "router" ->
         assert is_pid(Manager.router(manager))
       "client simulator" ->
