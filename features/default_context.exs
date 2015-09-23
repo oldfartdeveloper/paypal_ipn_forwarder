@@ -48,7 +48,9 @@ defmodule PaypalIpnForwarder.ManagerContext do
         assert(Manager.server(manager) == Router.server(router))
         assert(Manager.client_simulator(manager) == Router.client_simulator(router))
       "client simulator" ->
-        assert is_pid(Manager.client_simulator(manager))
+        client_simulator = Manager.client_simulator(manager)
+        assert is_pid(client_simulator)
+        assert(Manager.router(manager) == ClientSimulator.router(client_simulator))
       _ ->
         :dont_care
     end
