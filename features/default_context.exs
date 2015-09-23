@@ -21,9 +21,24 @@ defmodule PaypalIpnForwarder.ManagerContext do
   use WhiteBread.Context
 
   given_ ~r/^the four servers are created and configured$/, fn state ->
-    {:ok, servers} = PaypalIpnForwarder.Manager.start_link
-    state
-    |> Dict.put(:servers, servers)
+    {:ok, manager} = PaypalIpnForwarder.Manager.start_link
+    {:ok, state |> Dict.put(:manager, manager)}
+  end
+
+  then_ ~r/^the (?<client>.*) can see the (?<server>.*)$/, fn state, %{client: client, server: server} ->
+    manager = state |> Dict.get(:manager)
+    case client do
+      "sender simulator" ->
+        assert is_pid(PaypalIpnForwarder.Manager.sender_server(manager))
+      "server" ->
+        assert is_pid(PaypalIpnForwarder.Manager.server(manager))
+      "router" ->
+        assert is_pid(PaypalIpnForwarder.Manager.router(manager))
+      "client simulator" ->
+        assert is_pid(PaypalIpnForwarder.Manager.client_simulator(manager))
+      _ ->
+        :dont_care
+    end
     {:ok, state}
   end
 

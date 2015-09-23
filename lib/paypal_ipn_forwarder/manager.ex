@@ -13,9 +13,21 @@ defmodule PaypalIpnForwarder.Manager do
     GenServer.start_link(__MODULE__, :ok, [])
   end
 
-  # def sender_simulator do
-  #   GenServer.call()
-  # end
+  def sender_server(pid) do
+    GenServer.call(pid, :sender_server)
+  end
+
+  def server(pid) do
+    GenServer.call(pid, :server)
+  end
+
+  def router(pid) do
+    GenServer.call(pid, :router)
+  end
+
+  def client_simulator(pid) do
+    GenServer.call(pid, :client_simulator)
+  end
 
   def init(_) do
     {:ok, sender_simulator} = PaypalIpnForwarder.SenderSimulator.start_link
@@ -33,6 +45,22 @@ defmodule PaypalIpnForwarder.Manager do
                    client_simulator: client_simulator
                   }
     {:ok, state}
+  end
+
+  def handle_call(:sender_server, _from, state) do
+    {:reply, state.sender_server, state}
+  end
+
+  def handle_call(:server, _from, state) do
+    {:reply, state.server, state}
+  end
+
+  def handle_call(:router, _from, state) do
+    {:reply, state.router, state}
+  end
+
+  def handle_call(:client_simulator, _from, state) do
+    {:reply, state.client_simulator, state}
   end
 
   ####################

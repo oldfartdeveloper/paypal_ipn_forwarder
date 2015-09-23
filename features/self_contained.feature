@@ -16,6 +16,14 @@ Feature: Test Everything in Developer's Machine
   Background: Configure the four servers
     Given the four servers are created and configured
 
+  Scenario: Verify that the four servers can talk to each other
+    Then the sender simulator can see the server
+    And the server can see the sender simulator
+    And the server can see the router
+    And the router can see the server
+    And the router can see the client simulator
+    And the client simulator can see the router
+
   Scenario: Test IPN notification handshake between sendor simulator and the server
     When the sender simulator sends an IPN notification to the server as an HTTP request
     Then the server sends an IPN acknowledgement to the sender simulator as an HTTP request
