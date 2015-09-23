@@ -25,6 +25,7 @@ defmodule PaypalIpnForwarder.Manager do
     PaypalIpnForwarder.SenderSimulator.set_server(sender_simulator, server)
     PaypalIpnForwarder.Server.set_servers(server, sender_simulator, router)
     PaypalIpnForwarder.Router.set_servers(router, server, client_simulator)
+    PaypalIpnForwarder.ClientSimulator.set_router(client_simulator, router)
 
     state = %State{sender_server: sender_simulator,
                    server: server,
