@@ -13,6 +13,9 @@ Feature: Test Everything in Developer's Machine
   1.  The router
   4.  The PayPal client simulator
 
+  Background: Configure the four servers
+    Given the four servers are created and configured
+
   Scenario: Test IPN notification handshake between sendor simulator and the server
     When the sender simulator sends an IPN notification to the server as an HTTP request
     Then the server sends an IPN acknowledgement to the sender simulator as an HTTP request

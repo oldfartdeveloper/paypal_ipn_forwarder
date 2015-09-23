@@ -1,6 +1,7 @@
 defmodule PaypalIpnForwarder.DefaultContext do
   use WhiteBread.Context
 
+  subcontext PaypalIpnForwarder.ManagerContext
   subcontext PaypalIpnForwarder.SenderSimulatorContext
   # subcontext PaypalIpnForwarder.ServerContext
   # subcontext PaypalIpnForwarder.RouterContext
@@ -12,6 +13,19 @@ defmodule PaypalIpnForwarder.DefaultContext do
 
   scenario_starting_state fn feature_state ->
     feature_state |> Dict.put(:starting_state_loaded, :yes)
+  end
+
+end
+
+defmodule PaypalIpnForwarder.ManagerContext do
+  use WhiteBread.Context
+
+  given_ ~r/^the four servers are created and configured$/, fn state ->
+
+    {:ok, servers} = PaypalIpnForwarder.Manager.start_link
+    state
+    |> Dict.put(:servers, servers)
+    {:ok, state}
   end
 
 end
