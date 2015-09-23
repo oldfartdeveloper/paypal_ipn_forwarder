@@ -19,9 +19,11 @@ end
 
 defmodule PaypalIpnForwarder.ManagerContext do
   use WhiteBread.Context
+  alias PaypalIpnForwarder.Manager
+  alias PaypalIpnForwarder.SenderSimulator
 
   given_ ~r/^the four servers are created and configured$/, fn state ->
-    {:ok, manager} = PaypalIpnForwarder.Manager.start_link
+    {:ok, manager} = Manager.start_link
     {:ok, state |> Dict.put(:manager, manager)}
   end
 
@@ -29,13 +31,15 @@ defmodule PaypalIpnForwarder.ManagerContext do
     manager = state |> Dict.get(:manager)
     case client do
       "sender simulator" ->
-        assert is_pid(PaypalIpnForwarder.Manager.sender_server(manager))
+        sender_server = Manager.sender_server(manager)
+        assert is_pid(sender_server)
+        assert(Manager.server(manager) == SenderSimulator.server(sender_server))
       "server" ->
-        assert is_pid(PaypalIpnForwarder.Manager.server(manager))
+        assert is_pid(Manager.server(manager))
       "router" ->
-        assert is_pid(PaypalIpnForwarder.Manager.router(manager))
+        assert is_pid(Manager.router(manager))
       "client simulator" ->
-        assert is_pid(PaypalIpnForwarder.Manager.client_simulator(manager))
+        assert is_pid(Manager.client_simulator(manager))
       _ ->
         :dont_care
     end
