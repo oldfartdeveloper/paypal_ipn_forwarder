@@ -33,7 +33,7 @@ defmodule PaypalIpnForwarder.ManagerContext do
       "sender simulator" ->
         sender_server = Manager.sender_server(manager)
         assert is_pid(sender_server)
-        assert(Manager.server(manager) == SenderSimulator.server(sender_server))
+        assert(Manager.server(manager) != SenderSimulator.server(sender_server))
       "server" ->
         assert is_pid(Manager.server(manager))
       "router" ->
