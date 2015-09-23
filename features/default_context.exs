@@ -22,6 +22,7 @@ defmodule PaypalIpnForwarder.ManagerContext do
   alias PaypalIpnForwarder.Manager
   alias PaypalIpnForwarder.SenderSimulator
   alias PaypalIpnForwarder.Server
+  alias PaypalIpnForwarder.Router
   alias PaypalIpnForwarder.ClientSimulator
 
   given_ ~r/^the four servers are created and configured$/, fn state ->
@@ -42,7 +43,10 @@ defmodule PaypalIpnForwarder.ManagerContext do
         assert(Manager.sender_server(manager) == Server.sender_server(server))
         assert(Manager.router(manager) == Server.router(server))
       "router" ->
-        assert is_pid(Manager.router(manager))
+        router = Manager.router(manager)
+        assert is_pid(router)
+        assert(Manager.server(manager) == Router.server(router))
+        assert(Manager.client_simulator(manager) == Router.client_simulator(router))
       "client simulator" ->
         assert is_pid(Manager.client_simulator(manager))
       _ ->

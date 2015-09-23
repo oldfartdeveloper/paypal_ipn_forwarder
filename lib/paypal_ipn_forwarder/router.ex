@@ -12,6 +12,14 @@ defmodule PaypalIpnForwarder.Router do
     GenServer.cast(pid, {:set_servers, servers})
   end
 
+  def server(pid) do
+    GenServer.call(pid, :server)
+  end
+
+  def client_simulator(pid) do
+    GenServer.call(pid, :client_simulator)
+  end
+
   ## Server Callbacks
 
   def init(_) do
@@ -20,6 +28,14 @@ defmodule PaypalIpnForwarder.Router do
 
   def handle_cast({:set_servers, servers}, _state) do
     {:noreply, servers}
+  end
+
+  def handle_call(:server, _from, state) do
+    {:reply, state |> Dict.get(:server), state}
+  end
+
+  def handle_call(:client_simulator, _from, state) do
+    {:reply, state |> Dict.get(:client_simulator), state}
   end
 
 end
