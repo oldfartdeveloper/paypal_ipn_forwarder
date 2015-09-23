@@ -22,8 +22,10 @@ defmodule PaypalIpnForwarder.Manager do
     {:ok, server} = PaypalIpnForwarder.Server.start_link
     {:ok, router} = PaypalIpnForwarder.Router.start_link
     {:ok, client_simulator} = PaypalIpnForwarder.ClientSimulator.start_link
-    :ok = PaypalIpnForwarder.SenderSimulator.set_server(sender_simulator, server)
-    :ok = PaypalIpnForwarder.Server.set_servers(server, sender_simulator, router)
+    PaypalIpnForwarder.SenderSimulator.set_server(sender_simulator, server)
+    PaypalIpnForwarder.Server.set_servers(server, sender_simulator, router)
+    PaypalIpnForwarder.Router.set_servers(router, server, client_simulator)
+
     state = %State{sender_server: sender_simulator,
                    server: server,
                    router: router,
