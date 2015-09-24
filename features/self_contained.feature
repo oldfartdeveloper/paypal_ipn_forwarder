@@ -25,7 +25,7 @@ Feature: Test Everything in Developer's Machine
     And the client simulator can see the router
 
   Scenario: Test IPN notification handshake between sendor simulator and the server
-    When the sender simulator sends an IPN notification to the server as an HTTP request
+    When the sender simulator sends "IPN Notification" to the server
     Then the server sends an IPN acknowledgement to the sender simulator as an HTTP request
     And the sender simulator responds that the acknowledgement is valid.
 

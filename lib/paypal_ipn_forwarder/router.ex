@@ -1,5 +1,7 @@
 defmodule PaypalIpnForwarder.Router do
   use GenServer
+  alias PaypalIpnForwarder.Server
+  alias PaypalIpnForwarder.ClientSimulator
 
   ## Client API
 
@@ -20,6 +22,10 @@ defmodule PaypalIpnForwarder.Router do
     GenServer.call(pid, :client_simulator)
   end
 
+  def notify(pid, notification) do
+    GenServer.cast(pid, {:notify, notification})
+  end
+
   ## Server Callbacks
 
   def init(_) do
@@ -38,4 +44,9 @@ defmodule PaypalIpnForwarder.Router do
     {:reply, state |> Dict.get(:client_simulator), state}
   end
 
+  def handle_cast({:notify, notification}, state) do
+    client = state |> Dict.get(:client_simulator)
+    ClientSimulator.notify(client, notification)
+    {:noreply, state}
+  end
 end

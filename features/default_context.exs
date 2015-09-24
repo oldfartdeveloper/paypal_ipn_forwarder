@@ -63,8 +63,10 @@ defmodule PaypalIpnForwarder.SenderSimulatorContext do
   alias PaypalIpnForwarder.Router
   alias PaypalIpnForwarder.ClientSimulator
 
-  when_ ~r/^the sender simulator sends an IPN notification to the server as an HTTP request$/, fn state ->
-
+  when_ ~r/^the sender simulator sends (?<notification>.+) to the server$/, fn state, %{notification: notification} ->
+    manager = state |> Dict.get(:manager)
+    sender_simulator = Manager.sender_server(manager)
+    SenderSimulator.notify(sender_simulator, notification)
     {:ok, state}
   end
 

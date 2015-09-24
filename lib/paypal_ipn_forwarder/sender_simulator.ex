@@ -1,5 +1,6 @@
 defmodule PaypalIpnForwarder.SenderSimulator do
   use GenServer
+  alias PaypalIpnForwarder.Server
 
   ## Client API
 
@@ -15,6 +16,14 @@ defmodule PaypalIpnForwarder.SenderSimulator do
     GenServer.call(pid, :server)
   end
 
+  def notify(pid, notification) do
+    GenServer.cast(pid, {:notify, notification})
+  end
+
+  def acknowledge(pid, notification) do
+    GenServer.call(pid, {:acknowledge, notification})
+  end
+
   ## Server Callbacks
 
   def init(:ok) do
@@ -27,6 +36,16 @@ defmodule PaypalIpnForwarder.SenderSimulator do
 
   def handle_call(:server, _from, state) do
     {:reply, state, state}
+  end
+
+  def handle_cast({:notify, notification}, server) do
+    Server.notify(server, notification)
+    {:noreply, server}
+  end
+
+  def handle_call({:acknowledge, notification}, _from, state) do
+    IO.puts("*** In sender simulator acknowledge, notification is #{notification}")
+    {:reply, "VERIFIED", state}
   end
 
 end

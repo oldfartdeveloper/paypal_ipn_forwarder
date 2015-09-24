@@ -1,5 +1,7 @@
 defmodule PaypalIpnForwarder.Server do
   use GenServer
+  alias PaypalIpnForwarder.SenderSimulator
+  alias PaypalIpnForwarder.Router
 
   ## Client API
 
@@ -20,6 +22,10 @@ defmodule PaypalIpnForwarder.Server do
     GenServer.call(pid, :router)
   end
 
+  def notify(pid, notification) do
+    GenServer.cast(pid, {:notify, notification})
+  end
+
   ## Server Callbacks
 
   def init(_) do
@@ -36,5 +42,23 @@ defmodule PaypalIpnForwarder.Server do
 
   def handle_call(:router, _from, state) do
     {:reply, state |> Dict.get(:router), state}
+  end
+
+  def handle_cast({:notify, notification},  state) do
+    sender = state |> Dict.get(:sender)
+    # ["VERIFIED", "INVALID"]
+    ack = SenderSimulator.acknowledge(sender, notification)
+    IO.puts("*** Server received acknowledgement value of '#{ack}'")
+    case ack do
+      "VERIFIED" ->
+        router = state |> Dict.get(:router)
+        Router.notify(router, notification)
+        {:noreply, state}
+      "INVALID" ->
+        {:noreply, state}
+      _ ->
+        {:stop, "Acknowledge to sender failed", state}
+
+    end
   end
 end
