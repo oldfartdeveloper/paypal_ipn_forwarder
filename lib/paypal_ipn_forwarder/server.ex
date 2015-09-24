@@ -46,9 +46,7 @@ defmodule PaypalIpnForwarder.Server do
 
   def handle_cast({:notify, notification},  state) do
     sender = state |> Dict.get(:sender)
-    # ["VERIFIED", "INVALID"]
     ack = SenderSimulator.acknowledge(sender, notification)
-    IO.puts("*** Server received acknowledgement value of '#{ack}'")
     case ack do
       "VERIFIED" ->
         router = state |> Dict.get(:router)

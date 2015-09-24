@@ -44,7 +44,6 @@ defmodule PaypalIpnForwarder.SenderSimulator do
   end
 
   def handle_call({:acknowledge, notification}, _from, state) do
-    IO.puts("*** In sender simulator acknowledge, notification is #{notification}")
     {:reply, "VERIFIED", state}
   end
 
