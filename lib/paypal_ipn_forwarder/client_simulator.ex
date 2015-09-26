@@ -1,6 +1,5 @@
 defmodule PaypalIpnForwarder.ClientSimulator do
   use GenServer
-  alias PaypalIpnForwarder.Server
 
   ## Client API
 
@@ -31,13 +30,13 @@ defmodule PaypalIpnForwarder.ClientSimulator do
     {:noreply, router}
   end
 
-  def handle_call(:router, _from, state) do
-    {:reply, state, state}
-  end
-
   def handle_cast({:notify, notification}, state) do
     IO.puts("Received :notify message with '#{notification}'")
     {:noreply, state}
+  end
+
+  def handle_call(:router, _from, state) do
+    {:reply, state, state}
   end
 
 end

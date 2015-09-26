@@ -34,16 +34,16 @@ defmodule PaypalIpnForwarder.SenderSimulator do
     {:noreply, server}
   end
 
-  def handle_call(:server, _from, state) do
-    {:reply, state, state}
-  end
-
   def handle_cast({:notify, notification}, server) do
     Server.notify(server, notification)
     {:noreply, server}
   end
 
-  def handle_call({:acknowledge, notification}, _from, state) do
+  def handle_call(:server, _from, state) do
+    {:reply, state, state}
+  end
+
+  def handle_call({:acknowledge, _notification}, _from, state) do
     {:reply, "VERIFIED", state}
   end
 
