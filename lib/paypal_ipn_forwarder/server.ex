@@ -32,16 +32,16 @@ defmodule PaypalIpnForwarder.Server do
     {:ok, nil}
   end
 
-  def handle_cast({:set_servers, servers}, _state) do
-    {:noreply, servers}
-  end
-
   def handle_call(:sender_server, _from, state) do
     {:reply, state |> Dict.get(:sender), state}
   end
 
   def handle_call(:router, _from, state) do
     {:reply, state |> Dict.get(:router), state}
+  end
+
+  def handle_cast({:set_servers, servers}, _state) do
+    {:noreply, servers}
   end
 
   def handle_cast({:notify, notification},  state) do
