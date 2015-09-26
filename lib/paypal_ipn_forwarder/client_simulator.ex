@@ -36,6 +36,7 @@ defmodule PaypalIpnForwarder.ClientSimulator do
   end
 
   def handle_cast({:notify, notification}, state) do
+    IO.puts("Received :notify message with '#{notification}'")
     {:noreply, state}
   end
 
