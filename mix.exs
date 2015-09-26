@@ -11,7 +11,7 @@ defmodule PaypalIpnForwarder.Mixfile do
      NOTE: NOT SECURE!  DO NOT USE THIS IN PRODUCTION!
      """,
      version: "0.0.1",
-     elixir: "~> 1.0",
+     elixir: "~> 1.0.5",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps]
@@ -21,7 +21,10 @@ defmodule PaypalIpnForwarder.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger]]
+    [
+      applications: [:logger],
+      mod: {PaypalIpnForwarder.Manager, []}
+    ]
   end
 
   # Dependencies can be Hex packages:

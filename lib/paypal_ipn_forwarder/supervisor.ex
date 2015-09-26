@@ -1,0 +1,15 @@
+defmodule PaypalIpnForwarder.Supervisor do
+  use Supervisor
+
+  def start_link do
+    Supervisor.start_link(__MODULE__, nil)
+  end
+
+  def init(_) do
+    processes = [
+      worker(PaypalIpnForwarder.Manager, [])
+    ]
+    supervise(processes, strategy: :one_for_one)
+  end
+
+end

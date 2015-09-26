@@ -9,8 +9,18 @@ defmodule PaypalIpnForwarder.Manager do
   # Client API #
   ##############
 
+  def start(_opts \\ []) do
+    IO.puts "Starting (:start) manager."
+    GenServer.start_link(__MODULE__, nil, name: :manager)
+  end
+
   def start_link(_opts \\ []) do
-    GenServer.start_link(__MODULE__, :ok, [])
+    IO.puts "Starting (:start_link) manager."
+    GenServer.start_link(__MODULE__, nil, name: :manager)
+  end
+
+  def server_process(manager_name) do
+    GenServer.call(:manager, {:server_process, manager_name})
   end
 
   def sender_server(pid) do
