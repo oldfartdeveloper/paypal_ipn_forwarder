@@ -19,7 +19,6 @@ defmodule PaypalIpnForwarder.ClientSimulator do
     GenServer.cast(pid, {:notify, notification})
   end
 
-
   ## Server Callbacks
 
   def init(:ok) do
