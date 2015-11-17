@@ -13,4 +13,5 @@ defmodule PaypalIpnForwarder.SenderSimulatorTest do
     SenderSimulator.set_server(simulator, server)
     assert(server == SenderSimulator.server(simulator))
   end
+
 end
