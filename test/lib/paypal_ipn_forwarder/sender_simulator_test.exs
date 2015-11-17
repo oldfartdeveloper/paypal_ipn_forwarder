@@ -6,12 +6,13 @@ defmodule PaypalIpnForwarder.SenderSimulatorTest do
   setup do
     {:ok, simulator} = SenderSimulator.start_link
     {:ok, server} = Server.start_link
-    {:ok, simulator: simulator, server: server }
+    {:ok, processes: {simulator, server} }
   end
 
-  test "Holds server", %{simulator: simulator, server: server} do
+  test "Holds server (almost an identify test)", %{processes: {simulator, server}} do
     SenderSimulator.set_server(simulator, server)
-    assert(server == SenderSimulator.server(simulator))
+    actual = SenderSimulator.server(simulator)
+    assert(actual === server)
   end
 
 end

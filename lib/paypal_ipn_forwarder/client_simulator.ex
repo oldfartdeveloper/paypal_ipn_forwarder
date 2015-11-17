@@ -22,7 +22,7 @@ defmodule PaypalIpnForwarder.ClientSimulator do
   ## Server Callbacks
 
   def init(:ok) do
-    {:ok, nil}
+    {:ok, []}
   end
 
   def handle_cast({:set_router, router}, _state) do
