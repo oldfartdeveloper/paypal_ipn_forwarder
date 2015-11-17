@@ -10,12 +10,12 @@ defmodule PaypalIpnForwarder.Manager do
   ##############
 
   def start(_opts \\ []) do
-    IO.puts "Starting (:start) manager."
+    IO.puts "PaypalIpnForwarder.Manager.start..."
     GenServer.start_link(__MODULE__, nil, name: :manager)
   end
 
   def start_link(_opts \\ []) do
-    IO.puts "Starting (:start_link) manager."
+    IO.puts "PaypalIpnForwarder.Manager.start_link..."
     GenServer.start_link(__MODULE__, nil, name: :manager)
   end
 

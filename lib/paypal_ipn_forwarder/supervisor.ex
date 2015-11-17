@@ -2,14 +2,18 @@ defmodule PaypalIpnForwarder.Supervisor do
   use Supervisor
 
   def start_link do
-    Supervisor.start_link(__MODULE__, nil)
+    IO.puts "PaypalIpnForwarder.Supervisor.start_link..."
+    Supervisor.start_link(__MODULE__, :ok)
   end
 
+  @manager_name :mgr
+
   def init(_) do
-    processes = [
-      worker(PaypalIpnForwarder.Manager, [])
+    children = [
+      worker(PaypalIpnForwarder.Manager, [[name: @manager_name]])
     ]
-    supervise(processes, strategy: :one_for_one)
+    IO.puts "PaypalIpnForwarder.Supervisor.init for #{@manager_name}..."
+    supervise(children, strategy: :one_for_one)
   end
 
 end
