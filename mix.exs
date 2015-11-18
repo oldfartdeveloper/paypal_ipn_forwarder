@@ -11,7 +11,7 @@ defmodule PaypalIpnForwarder.Mixfile do
      NOTE: NOT SECURE!  DO NOT USE THIS IN PRODUCTION!
      """,
      version: "0.0.1",
-     elixir: "~> 1.0",
+     elixir: "~> 1.1.1",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps]
@@ -35,7 +35,10 @@ defmodule PaypalIpnForwarder.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [
-      {:white_bread, "~> 1.0.1", only: :dev}
+      {:cowboy, "~> 1.0.4"},
+      {:plug, "~> 1.0.2"},
+      {:httpoison, "~> 0.8.0", only: :test},
+      {:rebar3_hex, "~> 1.9.1", only: :test}
     ]
   end
 end
