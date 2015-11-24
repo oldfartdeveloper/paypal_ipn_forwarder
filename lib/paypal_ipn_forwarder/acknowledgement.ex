@@ -3,12 +3,10 @@
 # IPN post just received.
 defmodule PaypalIpnForwarder.Acknowledgement do
 
-  @ssl_files_path "/Users/SSmith/work/hedgeye-cms/vendor/plugins/active_merchant/lib/certs"
+  @ssl_files_path "certs"
   @cacert_file "#{@ssl_files_path}/cacert.pem"
-  @cert_file ""
-  @key_file ""
-#  @ssl [cacertfile: @cacert_file, keyfile: @key_file, certfile: @cert_file]
   @ssl [cacertfile: @cacert_file]
+
   # The only argument is the raw data being sent for acknowledgement
   def ack(raw) do
 
