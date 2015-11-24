@@ -21,7 +21,7 @@ defmodule PaypalIpnForwarder.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger]]
+    [applications: [:logger, :cowboy, :plug, :httpoison]]
   end
 
   # Dependencies can be Hex packages:
@@ -35,6 +35,10 @@ defmodule PaypalIpnForwarder.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [
+      {:cowboy, "~> 1.0.4"},
+      {:plug, "~> 1.0.2"},
+      {:httpoison, "~> 0.8.0"},
+      {:rebar3_hex, "~> 1.9.1"}
     ]
   end
 end
