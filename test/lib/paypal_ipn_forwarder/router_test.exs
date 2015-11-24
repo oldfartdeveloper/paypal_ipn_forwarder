@@ -6,10 +6,11 @@ defmodule PaypalIpnForwarder.RouterTest do
   setup do
     {:ok, server} = Server.start_link
     {:ok, router} = Router.start_link
-    {:ok, {server, router}}
+    {:ok, processes: {server, router}}
   end
 
-  test "Can connect with server", {server, router} do
-    assert true
+
+  test "Registered router can receive messages from server", %{processes: {server, router}} do
+    :not_implemented
   end
 end
