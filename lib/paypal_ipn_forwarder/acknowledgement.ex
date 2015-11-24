@@ -12,7 +12,7 @@ defmodule PaypalIpnForwarder.Acknowledgement do
 
     # Start out really clumsy: just do everything from beginning to end here:
     HTTPoison.start
-    HTTPoison.post!(
+    response = HTTPoison.post(
       "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_notify-validate",
       raw,
       %{
@@ -21,6 +21,9 @@ defmodule PaypalIpnForwarder.Acknowledgement do
       },
       ssl: @ssl
     )
+    case response do
+      {:ok, resp} -> resp.body
+    end
   end
 
 end
