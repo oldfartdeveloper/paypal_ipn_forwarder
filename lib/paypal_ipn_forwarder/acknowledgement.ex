@@ -3,9 +3,7 @@
 # IPN post just received.
 defmodule PaypalIpnForwarder.Acknowledgement do
 
-  @ssl_files_path "certs"
-  @cacert_file "#{@ssl_files_path}/cacert.pem"
-  @ssl [cacertfile: @cacert_file]
+  @ack_url "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_notify-validate"
 
   # The only argument is the raw data being sent for acknowledgement
   def ack(raw) do
@@ -13,13 +11,13 @@ defmodule PaypalIpnForwarder.Acknowledgement do
     # Start out really clumsy: just do everything from beginning to end here:
     HTTPoison.start
     response = HTTPoison.post(
-      "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_notify-validate",
+      @ack_url,
       raw,
       %{
         "Content-Type" => "application/x-www-form-urlencoded",
         "User-Agent"   => "Active Merchant -- http://activemerchant.org"
       },
-      ssl: @ssl
+      ssl: [cacertfile: "certs/cacert.pem"]
     )
     case response do
       {:ok, resp} -> resp.body
