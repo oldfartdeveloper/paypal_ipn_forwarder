@@ -1,0 +1,10 @@
+#!/usr/bin/env bash -li
+
+# This launches iex w/ the following:
+#
+# 1.  The epcd environment variable set so that other computers can access this Elixir instance.
+# 2.  The port range so that other computers can access this as a node.
+export ERL_EPMD_PORT="3456"
+echo "the added environment variables are..."
+echo "ERL_EPMD_PORT: $ERL_EPMD_PORT"
+iex --name "server@64.196.147.91" --cookie paypal_ipn_notifier --erl "-kernel inet_dist_listen_min 3458 -kernel inet_dist_listen_max 3458"
