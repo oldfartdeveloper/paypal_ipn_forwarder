@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+ssh ubuntu@ec2-52-23-162-49.compute-1.amazonaws.com
+
