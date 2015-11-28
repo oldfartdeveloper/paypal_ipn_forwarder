@@ -1,2 +1,13 @@
-%{"dogma": {:git, "https://github.com/meadsteve/dogma.git", "9b21429dbced0c2a5254395ee19a0a8c259d1994", [ref: "9b21429dbced0c2a5254395ee19a0a8c259d1994"]},
-  "white_bread": {:hex, :white_bread, "1.0.1"}}
+%{"certifi": {:hex, :certifi, "0.1.1"},
+  "cowboy": {:hex, :cowboy, "1.0.4"},
+  "cowlib": {:hex, :cowlib, "1.0.2"},
+  "dogma": {:git, "https://github.com/meadsteve/dogma.git", "9b21429dbced0c2a5254395ee19a0a8c259d1994", [ref: "9b21429dbced0c2a5254395ee19a0a8c259d1994"]},
+  "hackney": {:hex, :hackney, "1.4.4"},
+  "httpoison": {:hex, :httpoison, "0.8.0"},
+  "idna": {:hex, :idna, "1.0.2"},
+  "mimerl": {:hex, :mimerl, "1.0.0"},
+  "plug": {:hex, :plug, "1.0.2"},
+  "ranch": {:hex, :ranch, "1.2.0"},
+  "rebar3_hex": {:hex, :rebar3_hex, "1.9.1"},
+  "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.5"},
+  "white_bread": {:hex, :white_bread, "2.1.1"}}
