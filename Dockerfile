@@ -1,4 +1,6 @@
 FROM erlang:18.1
+
+# Install Elixir
 RUN apt-get update \
     && apt-get install unzip \
     && rm -rf /var/lib/apt/lists/*
@@ -9,3 +11,21 @@ RUN wget https://github.com/elixir-lang/elixir/releases/download/v1.1.1/Precompi
 ENV PATH $PATH:/opt/elixir-1.1.1/bin
 RUN mix local.hex --force \
     && mix local.rebar --force
+
+# Create application folder:
+RUN mkdir -p /app
+WORKDIR /app
+
+# Install application dependencies:
+COPY mix.exs /app/
+COPY mix.lock /app/
+
+RUN mix deps.get \
+    && mix deps.compile
+
+# Compile application for release:
+
+COPY . /app
+RUN mix compile
+
+# Configuring the Paypal IPN Forwarder:

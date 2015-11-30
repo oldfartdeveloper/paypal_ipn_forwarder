@@ -1,0 +1,10 @@
+Dockerfile
+.git
+.gitignore
+.dockerignore
+/_build
+/deps
+erl_crash.dump
+*.ez
+/*.beam
+/tmp
