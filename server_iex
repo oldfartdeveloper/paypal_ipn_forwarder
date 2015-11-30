@@ -4,4 +4,4 @@
 #
 # 1.  The epcd environment variable set so that other computers can access this Elixir instance.
 # 2.  The port range so that other computers can access this as a node.
-iex --name "server@64.196.147.91" --cookie paypal_ipn_notifier --erl "-kernel inet_dist_listen_min 9100 -kernel inet_dist_listen_max 9115"
+iex --name "server@64.196.147.91" --cookie paypal_ipn_notifier --erl "-kernel inet_dist_listen_min 9100 -kernel inet_dist_listen_max 9115" -S mix
