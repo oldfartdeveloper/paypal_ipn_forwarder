@@ -1,7 +1,7 @@
-#!/usr/bin/env bash -li
+#!/bin/bash
 
 # This launches iex w/ the following:
 #
 # 1.  The epcd environment variable set so that other computers can access this Elixir instance.
 # 2.  The port range so that other computers can access this as a node.
-iex --name "server@64.196.147.91" --cookie paypal_ipn_notifier --erl "-kernel inet_dist_listen_min 9100 -kernel inet_dist_listen_max 9115" -S mix
+iex --name "server@$PAYPAL_IPN_HOST" --cookie $PAYPAL_IPN_COOKIE --erl "-kernel inet_dist_listen_min 9100 -kernel inet_dist_listen_max 9115" -S mix
