@@ -6,6 +6,25 @@
 
 **[What this app does](paypal_ipn_forwarder.wiki/Home.md)**
 
+## Running the Server
+
+these instructions are for running the **Server**.  This runs under Docker and
+presently runs on the `ci-core` group.
+
+``` bash
+cd ~/<paypal-ipn-forwarder-dir>
+git co 109173888-docker # This will change
+git remote add aws-staging ssh://git@lb-staging-wildcard-1802645137.us-east-1.elb.amazonaws.com:2223/home/git/paypal_ipn_forwarder.git
+git push aws-staging 109173888-docker:master
+ssh core@52.91.54.184 # IP will change
+```
+
+Now you are in the Docker system.
+
+``` bash
+# TODO - show the commands needed in the server Docker container.
+```
+
 ## Features
 
 1.  This Elixir app only needs to be set up once to handle multiple PayPal sandboxes
